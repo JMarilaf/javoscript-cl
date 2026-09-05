@@ -1,0 +1,39 @@
+.caso {
+  padding: 2.5rem 1.25rem 1rem;
+  h1 { margin-bottom: 0.6rem; font-size: clamp(1.75rem, 4.5vw, 2.35rem); }
+  h2 { margin: 2.5rem 0 0.9rem; }
+}
+.volver { display: inline-block; font-size: 0.88rem; color: var(--text-dim); margin-bottom: 2rem; }
+.volver:hover { color: var(--text); }
+.gancho { font-size: 1.08rem; color: var(--text-dim); max-width: 58ch; }
+
+.meta {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0 0;
+  dt { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); font-weight: 600; margin-bottom: 0.35rem; }
+  dd { margin: 0; font-size: 0.93rem; }
+}
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.puntos {
+  padding-left: 1.15rem;
+  margin: 0 0 1.4em;
+  li { margin-bottom: 0.5rem; }
+}
+
+.cierre {
+  margin: 3rem 0 0;
+  padding: 1.5rem 1.6rem;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-alt);
+  border-radius: 0 10px 10px 0;
+  p:last-child { margin: 0.6rem 0 0; }
+}
+
+.nota {
+  margin-top: 2.5rem;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  font-style: italic;
+}

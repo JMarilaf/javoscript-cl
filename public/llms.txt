@@ -1,0 +1,22 @@
+# Javier Marilaf
+
+> Desarrollador Full Stack en Santiago, Chile. Angular, TypeScript, Java/Spring y
+> eCommerce sobre SAP Commerce Cloud. Tres años sosteniendo una plataforma multimarca
+> que sirve a diez sitios de retail desde una sola base de código.
+
+## Casos de trabajo
+
+- [Incidente de autenticación en producción](https://javoscript.cl/caso/incidente-autenticacion/): un upgrade de plataforma removió el algoritmo pbkdf2 y dejó sin login al ~10% de los clientes. Diagnóstico, encoder de compatibilidad con migración transparente, verificación end-to-end.
+- [Upgrade de JDK 21 y Angular 19 en un multisite de 10 marcas](https://javoscript.cl/caso/upgrade-multisite/): integración cronológica de ~90 releases, migración de Angular 14/17 a 19, reescritura del arranque SSR.
+- [SEO técnico, GEO y Core Web Vitals sobre Angular SSR](https://javoscript.cl/caso/seo-geo-ssr/): JSON-LD por tipo de página, llms.txt, Core Web Vitals y analítica en entorno de renderizado en servidor.
+
+## Proyectos
+
+- [Interviewer](https://api-quiz.javoscript.cl): preparación para entrevistas técnicas y práctica de inglés. NestJS, Angular SSR, PostgreSQL.
+- [Palmares](https://palmares.javoscript.cl): PWA de gestión escolar para apoderados. NestJS, Prisma, Angular 18 PWA, MinIO.
+
+## Contacto
+
+- Email: javiermarilaf@gmail.com
+- LinkedIn: https://linkedin.com/in/jmarilaf
+- GitHub: https://github.com/JMarilaf

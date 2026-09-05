@@ -1,0 +1,52 @@
+@if (caso) {
+  <article class="wrap caso">
+    <a routerLink="/" class="volver">← Volver</a>
+
+    <p class="eyebrow">{{ caso.contexto }}</p>
+    <h1>{{ caso.titulo }}</h1>
+    <p class="gancho">{{ caso.gancho }}</p>
+
+    <dl class="meta">
+      <div><dt>Rol</dt><dd>{{ caso.rol }}</dd></div>
+      <div>
+        <dt>Stack</dt>
+        <dd class="tags">
+          @for (s of caso.stack; track s) {
+            <span class="tag">{{ s }}</span>
+          }
+        </dd>
+      </div>
+    </dl>
+
+    <hr />
+
+    @for (sec of caso.secciones; track $index) {
+      @if (sec.h) {
+        <h2>{{ sec.h }}</h2>
+      }
+      @for (parrafo of sec.p; track $index) {
+        <p [innerHTML]="parrafo"></p>
+      }
+      @if (sec.code) {
+        <pre><code>{{ sec.code.texto }}</code></pre>
+      }
+      @if (sec.lista) {
+        <ul class="puntos">
+          @for (item of sec.lista; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      }
+    }
+
+    <aside class="cierre">
+      <p class="eyebrow">Lo que me llevo</p>
+      <p>{{ caso.cierre }}</p>
+    </aside>
+
+    <p class="nota">
+      Caso anonimizado: se omiten el nombre del cliente, las marcas involucradas y cualquier
+      fragmento de código propietario.
+    </p>
+  </article>
+}

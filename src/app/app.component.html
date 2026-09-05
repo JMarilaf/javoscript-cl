@@ -1,0 +1,26 @@
+<header class="top">
+  <div class="wrap bar">
+    <a routerLink="/" class="brand">javoscript<span>.cl</span></a>
+    <nav>
+      <a routerLink="/" fragment="casos">Casos</a>
+      <a routerLink="/" fragment="proyectos">Proyectos</a>
+      <a [href]="'mailto:' + perfil.email">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <router-outlet />
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>
+      {{ perfil.nombre }} — {{ perfil.ubicacion }}<br />
+      <a [href]="'mailto:' + perfil.email">{{ perfil.email }}</a> ·
+      <a [href]="perfil.linkedin" rel="noopener">LinkedIn</a> ·
+      <a [href]="perfil.github" rel="noopener">GitHub</a>
+    </p>
+    <p class="fine">© {{ anio }} · Angular {{ '19' }} con renderizado en servidor</p>
+  </div>
+</footer>

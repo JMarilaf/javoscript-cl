@@ -1,0 +1,73 @@
+.hero {
+  padding: 4.5rem 1.25rem 3rem;
+  .titular { font-size: 1.1rem; color: var(--text-dim); margin: 0.6rem 0 1.6rem; }
+  .resumen { font-size: 1.08rem; max-width: 58ch; }
+  h1 { margin-bottom: 0.35rem; }
+}
+.eyebrow { margin-bottom: 0.7rem; }
+
+.acciones { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1.8rem; }
+.btn {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 550;
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  &:hover { text-decoration: none; opacity: 0.9; }
+  &.ghost { background: transparent; color: var(--text); border-color: var(--border); }
+}
+
+.sec { margin: 3.5rem 0 0.5rem; }
+.sec-nota { color: var(--text-dim); font-size: 0.95rem; max-width: 60ch; margin-bottom: 1.6rem; }
+
+ul { list-style: none; padding: 0; margin: 0; }
+
+.casos li { margin-bottom: 0.9rem; }
+.casos a {
+  display: block;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.15s, transform 0.15s;
+  &:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+}
+.gancho { color: var(--text-dim); font-size: 0.95rem; margin: 0.5rem 0 0.9rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0 0 0.9rem; }
+.mas { font-size: 0.88rem; color: var(--accent); font-weight: 550; }
+
+.proys li {
+  padding: 1.35rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  margin-bottom: 0.9rem;
+  p { font-size: 0.95rem; }
+}
+.ph { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.5rem; }
+.estado {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 100px;
+  padding: 0.15rem 0.6rem;
+}
+
+.stack {
+  margin: 0;
+  display: grid;
+  gap: 1.4rem;
+  dt { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); font-weight: 600; margin-bottom: 0.55rem; }
+  dd { margin: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+}

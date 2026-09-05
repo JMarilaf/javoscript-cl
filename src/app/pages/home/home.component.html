@@ -1,0 +1,76 @@
+<section class="hero wrap">
+  <p class="eyebrow">{{ perfil.ubicacion }}</p>
+  <h1>{{ perfil.nombre }}</h1>
+  <p class="titular">{{ perfil.titular }}</p>
+  <p class="resumen">{{ perfil.resumen }}</p>
+  <p class="acciones">
+    <a class="btn" [href]="'mailto:' + perfil.email">Escríbeme</a>
+    <a class="btn ghost" [href]="perfil.linkedin" rel="noopener">LinkedIn</a>
+  </p>
+</section>
+
+<section class="wrap" id="casos">
+  <h2 class="sec">Casos de trabajo</h2>
+  <p class="sec-nota">
+    Tres problemas reales de producción, contados completos: el síntoma, el diagnóstico, la
+    decisión y cómo se verificó. Anonimizados por confidencialidad del cliente.
+  </p>
+
+  <ul class="casos">
+    @for (c of casos; track c.slug) {
+      <li>
+        <a [routerLink]="['/caso', c.slug]">
+          <h3>{{ c.titulo }}</h3>
+          <p class="gancho">{{ c.gancho }}</p>
+          <p class="tags">
+            @for (s of c.stack; track s) {
+              <span class="tag">{{ s }}</span>
+            }
+          </p>
+          <span class="mas">Leer el caso →</span>
+        </a>
+      </li>
+    }
+  </ul>
+</section>
+
+<section class="wrap" id="proyectos">
+  <h2 class="sec">Proyectos propios</h2>
+  <p class="sec-nota">Construidos y desplegados por mí, corriendo en mi propio servidor.</p>
+
+  <ul class="proys">
+    @for (p of proyectos; track p.nombre) {
+      <li>
+        <div class="ph">
+          <h3>{{ p.nombre }}</h3>
+          <span class="estado">{{ p.estado }}</span>
+        </div>
+        <p>{{ p.descripcion }}</p>
+        <p class="tags">
+          @for (s of p.stack; track s) {
+            <span class="tag">{{ s }}</span>
+          }
+        </p>
+        @if (p.demo) {
+          <a class="mas" [href]="p.demo" rel="noopener">Ver funcionando →</a>
+        }
+      </li>
+    }
+  </ul>
+</section>
+
+<section class="wrap" id="stack">
+  <h2 class="sec">Stack</h2>
+  <dl class="stack">
+    @for (g of stack; track g.grupo) {
+      <div>
+        <dt>{{ g.grupo }}</dt>
+        <dd>
+          @for (i of g.items; track i) {
+            <span class="tag">{{ i }}</span>
+          }
+        </dd>
+      </div>
+    }
+  </dl>
+</section>
