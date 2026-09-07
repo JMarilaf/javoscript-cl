@@ -9,6 +9,10 @@ const ORIGEN = 'https://javoscript.cl';
 /** Codigo de idioma HTML para cada idioma del sitio. */
 const LANG: Record<string, string> = { es: 'es-CL', en: 'en' };
 
+/** El servidor sirve las rutas con barra final y redirige 301 sin ella. La URL
+ *  canonica tiene que ser la que responde 200, no la que redirige. */
+const conBarra = (ruta: string) => (ruta.endsWith('/') ? ruta : `${ruta}/`);
+
 @Injectable({ providedIn: 'root' })
 export class SeoService {
   private title = inject(Title);
@@ -18,7 +22,7 @@ export class SeoService {
 
   set(t: string, desc: string): void {
     const idioma = this.i18n.idioma();
-    const url = ORIGEN + this.i18n.enIdioma(idioma);
+    const url = ORIGEN + conBarra(this.i18n.enIdioma(idioma));
 
     this.doc.documentElement.setAttribute('lang', LANG[idioma]);
 
@@ -36,9 +40,9 @@ export class SeoService {
     // hreflang en las dos direcciones mas x-default: sin esto los buscadores
     // tratan las dos versiones como contenido duplicado y eligen una sola.
     for (const otro of IDIOMAS) {
-      this.enlace('alternate', ORIGEN + this.i18n.enIdioma(otro), LANG[otro]);
+      this.enlace('alternate', ORIGEN + conBarra(this.i18n.enIdioma(otro)), LANG[otro]);
     }
-    this.enlace('alternate', ORIGEN + this.i18n.enIdioma('es'), 'x-default');
+    this.enlace('alternate', ORIGEN + conBarra(this.i18n.enIdioma('es')), 'x-default');
   }
 
   jsonLd(id: string, data: unknown): void {
