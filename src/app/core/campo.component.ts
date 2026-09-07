@@ -119,6 +119,14 @@ export class CampoComponent {
     };
     esquema.addEventListener('change', releerColores);
 
+    // El tema tambien cambia por el selector, que escribe data-tema en <html>.
+    // Sin esto el campo se queda con la paleta del tema anterior.
+    const observador = new MutationObserver(() => {
+      releerColores();
+      if (!raf) dibujar(); // si el bucle esta pausado, refrescar igual
+    });
+    observador.observe(document.documentElement, { attributeFilter: ['data-tema'] });
+
     let raf = 0;
     let t0 = performance.now();
     let tiempo = 0;
