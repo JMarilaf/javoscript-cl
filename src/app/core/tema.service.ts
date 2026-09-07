@@ -1,53 +1,60 @@
-import { DOCUMENT, Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
+import { DOCUMENT, Injectable, PLATFORM_ID, afterNextRender, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-export type Tema = 'auto' | 'claro' | 'oscuro';
+export type Tema = 'claro' | 'oscuro';
 
 export const COOKIE_TEMA = 'tema';
 
 /**
- * Tema con tres estados. `auto` sigue al sistema operativo y es el valor por
- * defecto: la mayoria de la gente nunca toca el selector, y para esa mayoria
- * basta el `prefers-color-scheme` del CSS.
+ * Tema claro/oscuro.
  *
- * La eleccion explicita se guarda en cookie, no en localStorage, porque el
- * servidor tiene que poder leerla: asi el HTML ya sale con el atributo puesto
- * y no hay parpadeo. Un script inline en el <head>, que es la solucion
- * habitual, quedaria bloqueado por la CSP del sitio (`script-src 'self'`).
+ * No hay un estado "auto" visible: el sitio arranca en lo que diga el sistema
+ * operativo —eso lo resuelve `prefers-color-scheme` en el CSS— y el
+ * interruptor solo aparece como claro u oscuro. Tres estados no se comunican
+ * con un solo control, y la mayoria de la gente nunca necesita el tercero.
+ *
+ * La eleccion se guarda en cookie, no en localStorage, porque el servidor
+ * tiene que leerla para escribir `data-tema` en el HTML y evitar el parpadeo.
+ * Un script inline en el <head>, que es la solucion habitual, quedaria
+ * bloqueado por la CSP del sitio (`script-src 'self'`).
  */
 @Injectable({ providedIn: 'root' })
 export class TemaService {
   private doc = inject(DOCUMENT);
   private navegador = isPlatformBrowser(inject(PLATFORM_ID));
 
-  /** El servidor ya dejo el atributo puesto; en el navegador se lee de ahi. */
-  readonly tema = signal<Tema>(leerDelDocumento(this.doc));
+  /**
+   * Solo para accesibilidad (`aria-checked`). La posicion visible de la
+   * perilla NO depende de esto: la calcula el CSS con `--tema-pos`, asi que
+   * es correcta desde el primer render aunque el servidor no sepa el tema del
+   * sistema.
+   */
+  readonly esOscuro = signal(false);
+
+  constructor() {
+    afterNextRender(() => this.esOscuro.set(this.actual() === 'oscuro'));
+  }
+
+  /** El tema que se esta viendo ahora: atributo explicito, o el del sistema. */
+  actual(): Tema {
+    const explicito = this.doc.documentElement.getAttribute('data-tema');
+    if (explicito === 'claro' || explicito === 'oscuro') return explicito;
+    return this.navegador && matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'oscuro'
+      : 'claro';
+  }
+
+  alternar(): void {
+    this.fijar(this.actual() === 'oscuro' ? 'claro' : 'oscuro');
+  }
 
   fijar(t: Tema): void {
-    this.tema.set(t);
-
-    const raiz = this.doc.documentElement;
-    if (t === 'auto') raiz.removeAttribute('data-tema');
-    else raiz.setAttribute('data-tema', t);
-
+    this.doc.documentElement.setAttribute('data-tema', t);
+    this.esOscuro.set(t === 'oscuro');
     if (!this.navegador) return;
 
     // Un ano, y SameSite=Lax: es una preferencia de presentacion, no un dato
     // que sirva para rastrear a nadie entre sitios.
-    this.doc.cookie =
-      t === 'auto'
-        ? `${COOKIE_TEMA}=; path=/; max-age=0; SameSite=Lax`
-        : `${COOKIE_TEMA}=${t}; path=/; max-age=31536000; SameSite=Lax`;
+    this.doc.cookie = `${COOKIE_TEMA}=${t}; path=/; max-age=31536000; SameSite=Lax`;
   }
-
-  /** Cicla auto -> claro -> oscuro -> auto. */
-  siguiente(): void {
-    const orden: Tema[] = ['auto', 'claro', 'oscuro'];
-    this.fijar(orden[(orden.indexOf(this.tema()) + 1) % orden.length]);
-  }
-}
-
-function leerDelDocumento(doc: Document): Tema {
-  const v = doc.documentElement.getAttribute('data-tema');
-  return v === 'claro' || v === 'oscuro' ? v : 'auto';
 }

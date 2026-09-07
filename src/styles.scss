@@ -35,6 +35,11 @@
   --accent: #1246c4;
   --code-bg: #edf1f7;
 
+  /* 0 = claro, 1 = oscuro. La perilla del interruptor de tema se posiciona
+     con esto, asi queda correcta desde el HTML del servidor sin que el
+     servidor tenga que saber el tema del sistema operativo. */
+  --tema-pos: 0;
+
   --mono: 'Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --sans: 'Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --maxw: 880px;
@@ -54,6 +59,7 @@
   --text-dim: #848d9c;
   --accent: #3d8bff;
   --code-bg: #10131a;
+  --tema-pos: 1;
 }
 
 @media (prefers-color-scheme: dark) {
