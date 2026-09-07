@@ -1,17 +1,17 @@
-@if (caso) {
+@if (caso(); as c) {
   <article class="wrap caso">
-    <a routerLink="/" class="volver">← Volver</a>
+    <a [routerLink]="i18n.base() || '/'" class="volver">{{ ui().volver }}</a>
 
-    <p class="eyebrow">{{ caso.contexto }}</p>
-    <h1>{{ caso.titulo }}</h1>
-    <p class="gancho">{{ caso.gancho }}</p>
+    <p class="label">{{ c.contexto }}</p>
+    <h1>{{ c.titulo }}</h1>
+    <p class="gancho">{{ c.gancho }}</p>
 
     <dl class="meta">
-      <div><dt>Rol</dt><dd>{{ caso.rol }}</dd></div>
+      <div><dt>{{ ui().rol }}</dt><dd>{{ c.rol }}</dd></div>
       <div>
-        <dt>Stack</dt>
+        <dt>{{ ui().stack }}</dt>
         <dd class="tags">
-          @for (s of caso.stack; track s) {
+          @for (s of c.stack; track s) {
             <span class="tag">{{ s }}</span>
           }
         </dd>
@@ -20,7 +20,7 @@
 
     <hr />
 
-    @for (sec of caso.secciones; track $index) {
+    @for (sec of c.secciones; track $index) {
       @if (sec.h) {
         <h2>{{ sec.h }}</h2>
       }
@@ -40,13 +40,10 @@
     }
 
     <aside class="cierre">
-      <p class="eyebrow">Lo que me llevo</p>
-      <p>{{ caso.cierre }}</p>
+      <p class="label">{{ ui().cierre }}</p>
+      <p>{{ c.cierre }}</p>
     </aside>
 
-    <p class="nota">
-      Caso anonimizado: se omiten el nombre del cliente, las marcas involucradas y cualquier
-      fragmento de código propietario.
-    </p>
+    <p class="nota">{{ ui().notaAnonimato }}</p>
   </article>
 }

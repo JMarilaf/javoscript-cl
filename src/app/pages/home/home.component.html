@@ -1,76 +1,87 @@
-<section class="hero wrap">
-  <p class="eyebrow">{{ perfil.ubicacion }}</p>
-  <h1>{{ perfil.nombre }}</h1>
-  <p class="titular">{{ perfil.titular }}</p>
-  <p class="resumen">{{ perfil.resumen }}</p>
-  <p class="acciones">
-    <a class="btn" [href]="'mailto:' + perfil.email">Escríbeme</a>
-    <a class="btn ghost" [href]="perfil.linkedin" rel="noopener">LinkedIn</a>
-  </p>
+<section class="portada">
+  <div class="wrap">
+    <p class="lugar">{{ perfil().ubicacion }}</p>
+    <h1 class="firma">
+      <span>Javier</span>
+      <span>Marilaf</span>
+    </h1>
+    <p class="rol">{{ perfil().titular }}</p>
+  </div>
+  <a class="bajar" [href]="i18n.base() + '/#trabajo'">
+    <span class="label">{{ ui().elTrabajo }}</span>
+    <span class="flecha" aria-hidden="true"></span>
+  </a>
 </section>
 
-<section class="wrap" id="casos">
-  <h2 class="sec">Casos de trabajo</h2>
-  <p class="sec-nota">
-    Tres problemas reales de producción, contados completos: el síntoma, el diagnóstico, la
-    decisión y cómo se verificó. Anonimizados por confidencialidad del cliente.
-  </p>
-
-  <ul class="casos">
-    @for (c of casos; track c.slug) {
+<div class="lamina">
+  <section class="wrap">
+    <p class="resumen">{{ perfil().resumen }}</p>
+    <ul class="via">
       <li>
-        <a [routerLink]="['/caso', c.slug]">
-          <h3>{{ c.titulo }}</h3>
-          <p class="gancho">{{ c.gancho }}</p>
-          <p class="tags">
-            @for (s of c.stack; track s) {
-              <span class="tag">{{ s }}</span>
-            }
-          </p>
-          <span class="mas">Leer el caso →</span>
-        </a>
+        <span class="label">{{ ui().correo }}</span>
+        <a [href]="'mailto:' + perfil().email">{{ perfil().email }}</a>
       </li>
-    }
-  </ul>
-</section>
-
-<section class="wrap" id="proyectos">
-  <h2 class="sec">Proyectos propios</h2>
-  <p class="sec-nota">Construidos y desplegados por mí, corriendo en mi propio servidor.</p>
-
-  <ul class="proys">
-    @for (p of proyectos; track p.nombre) {
       <li>
-        <div class="ph">
-          <h3>{{ p.nombre }}</h3>
-          <span class="estado">{{ p.estado }}</span>
+        <span class="label">{{ ui().redes }}</span>
+        <a [href]="perfil().linkedin" rel="noopener">LinkedIn</a>
+        <span class="sep">/</span>
+        <a [href]="perfil().github" rel="noopener">GitHub</a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="wrap" id="trabajo">
+    <div class="rule"><span class="label">{{ ui().casos }}</span></div>
+    <p class="nota">{{ ui().notaCasos }}</p>
+
+    <ol class="indice">
+      @for (c of casos(); track c.slug) {
+        <li>
+          <a [routerLink]="i18n.base() + '/caso/' + c.slug">
+            <span class="num" aria-hidden="true"></span>
+            <span class="cuerpo">
+              <span class="titulo">{{ c.titulo }}</span>
+              <span class="gancho">{{ c.gancho }}</span>
+            </span>
+            <span class="meta">{{ c.stack.slice(0, 2).join(' · ') }}</span>
+          </a>
+        </li>
+      }
+    </ol>
+  </section>
+
+  <section class="wrap" id="proyectos">
+    <div class="rule"><span class="label">{{ ui().proyectos }}</span></div>
+    <p class="nota">{{ ui().notaProyectos }}</p>
+
+    <ol class="indice">
+      @for (p of proyectos(); track p.nombre) {
+        <li>
+          <a [href]="p.demo" rel="noopener">
+            <span class="num" aria-hidden="true"></span>
+            <span class="cuerpo">
+              <span class="titulo">
+                {{ p.nombre }}
+                <span class="estado">{{ p.estado }}</span>
+              </span>
+              <span class="gancho">{{ p.descripcion }}</span>
+            </span>
+            <span class="meta">{{ p.stack.slice(0, 2).join(' · ') }}</span>
+          </a>
+        </li>
+      }
+    </ol>
+  </section>
+
+  <section class="wrap" id="stack">
+    <div class="rule"><span class="label">{{ ui().stack }}</span></div>
+    <dl class="stack">
+      @for (g of stack(); track g.grupo) {
+        <div class="fila">
+          <dt>{{ g.grupo }}</dt>
+          <dd>{{ g.items.join('  ') }}</dd>
         </div>
-        <p>{{ p.descripcion }}</p>
-        <p class="tags">
-          @for (s of p.stack; track s) {
-            <span class="tag">{{ s }}</span>
-          }
-        </p>
-        @if (p.demo) {
-          <a class="mas" [href]="p.demo" rel="noopener">Ver funcionando →</a>
-        }
-      </li>
-    }
-  </ul>
-</section>
-
-<section class="wrap" id="stack">
-  <h2 class="sec">Stack</h2>
-  <dl class="stack">
-    @for (g of stack; track g.grupo) {
-      <div>
-        <dt>{{ g.grupo }}</dt>
-        <dd>
-          @for (i of g.items; track i) {
-            <span class="tag">{{ i }}</span>
-          }
-        </dd>
-      </div>
-    }
-  </dl>
-</section>
+      }
+    </dl>
+  </section>
+</div>

@@ -1,73 +1,247 @@
-.hero {
-  padding: 4.5rem 1.25rem 3rem;
-  .titular { font-size: 1.1rem; color: var(--text-dim); margin: 0.6rem 0 1.6rem; }
-  .resumen { font-size: 1.08rem; max-width: 58ch; }
-  h1 { margin-bottom: 0.35rem; }
-}
-.eyebrow { margin-bottom: 0.7rem; }
+:host { display: block; }
 
-.acciones { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1.8rem; }
-.btn {
-  display: inline-block;
-  padding: 0.55rem 1.1rem;
-  border-radius: 8px;
-  font-size: 0.92rem;
-  font-weight: 550;
-  background: var(--accent);
-  color: #fff;
-  border: 1px solid var(--accent);
-  &:hover { text-decoration: none; opacity: 0.9; }
-  &.ghost { background: transparent; color: var(--text); border-color: var(--border); }
+/* ---------------------------------------------------------------
+   Portada: una pantalla completa donde manda el campo. El texto es
+   minimo a proposito — el contenido empieza en la lamina de abajo.
+   --------------------------------------------------------------- */
+.portada {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 6rem 0 8rem;
 }
 
-.sec { margin: 3.5rem 0 0.5rem; }
-.sec-nota { color: var(--text-dim); font-size: 0.95rem; max-width: 60ch; margin-bottom: 1.6rem; }
-
-ul { list-style: none; padding: 0; margin: 0; }
-
-.casos li { margin-bottom: 0.9rem; }
-.casos a {
-  display: block;
-  padding: 1.35rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--text);
-  transition: border-color 0.15s, transform 0.15s;
-  &:hover {
-    text-decoration: none;
-    border-color: var(--accent);
-    transform: translateY(-1px);
-  }
-}
-.gancho { color: var(--text-dim); font-size: 0.95rem; margin: 0.5rem 0 0.9rem; }
-.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0 0 0.9rem; }
-.mas { font-size: 0.88rem; color: var(--accent); font-weight: 550; }
-
-.proys li {
-  padding: 1.35rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-  margin-bottom: 0.9rem;
-  p { font-size: 0.95rem; }
-}
-.ph { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.5rem; }
-.estado {
+.lugar {
+  font-family: var(--mono);
   font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 0 0 1.2rem;
+  animation: entrar 0.9s 0.05s both cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.firma {
+  font-size: clamp(3.2rem, 13vw, 9.5rem);
   font-weight: 600;
-  letter-spacing: 0.04em;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  margin: 0;
+
+  span {
+    display: block;
+    animation: entrar 1.1s both cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  span:nth-child(1) { animation-delay: 0.12s; }
+  span:nth-child(2) { animation-delay: 0.22s; }
+}
+
+.rol {
+  margin: 1.6rem 0 0;
+  font-family: var(--mono);
+  font-size: clamp(0.78rem, 1.5vw, 0.95rem);
+  color: var(--text-dim);
+  animation: entrar 1s 0.36s both cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(0.55em); }
+  to   { opacity: 1; transform: none; }
+}
+
+.bajar {
+  position: absolute;
+  left: 50%;
+  bottom: 2.5rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  animation: entrar 1s 0.6s both ease-out;
+
+  .flecha {
+    width: 1px;
+    height: 2.4rem;
+    background: linear-gradient(var(--text-dim), transparent);
+    transform-origin: top;
+    animation: caer 2.4s infinite ease-in-out;
+  }
+  &:hover .label { color: var(--accent); }
+}
+
+@keyframes caer {
+  0%, 100% { transform: scaleY(1);    opacity: 0.9; }
+  50%      { transform: scaleY(0.45); opacity: 0.35; }
+}
+
+/* ---------------------------------------------------------------
+   Lamina de contenido: se apoya sobre el campo con una capa translucida,
+   asi el texto tiene contraste sin tapar la animacion del todo.
+   --------------------------------------------------------------- */
+.lamina {
+  position: relative;
+  padding: 4.5rem 0 5rem;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(14px) saturate(115%);
+  border-top: 1px solid var(--border);
+}
+
+.resumen {
+  max-width: 58ch;
+  margin: 0;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.via {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 2.5rem;
+}
+.via li { display: flex; gap: 0.7rem; font-size: 0.85rem; }
+.via a { border-bottom: 1px solid var(--border); }
+.via a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.sep { color: var(--text-dim); padding: 0 0.15rem; }
+
+.nota {
+  max-width: 62ch;
+  margin: 0 0 1.6rem;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+/* --- El indice. Tres columnas: numero, cuerpo, stack. --- */
+.indice {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: n;
+  border-top: 1px solid var(--border);
+}
+.indice li { counter-increment: n; border-bottom: 1px solid var(--border); }
+
+.indice a {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr minmax(0, 13.5rem);
+  gap: 1.4rem;
+  align-items: baseline;
+  padding: 1.05rem 0.9rem 1.05rem 0;
+  position: relative;
+  transition: background 0.2s ease, padding-left 0.2s ease;
+}
+
+.indice a::before {
+  content: '';
+  position: absolute;
+  left: -0.9rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.indice a:hover::before,
+.indice a:focus-visible::before { transform: scaleY(1); }
+.indice a:hover {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  padding-left: 0.6rem;
+}
+.indice a:hover .titulo { color: var(--accent); }
+
+.num::before {
+  content: counter(n, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.cuerpo { display: block; min-width: 0; }
+.titulo {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  transition: color 0.16s ease;
+}
+.gancho {
+  display: block;
+  margin-top: 0.28rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.estado {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent);
-  background: var(--accent-soft);
-  border-radius: 100px;
-  padding: 0.15rem 0.6rem;
+  border: 1px solid currentColor;
+  padding: 0.1rem 0.4rem;
+  margin-left: 0.5rem;
+  vertical-align: 0.12em;
+  white-space: nowrap;
 }
 
-.stack {
-  margin: 0;
+.meta {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Stack --- */
+.stack { margin: 0; border-top: 1px solid var(--border); }
+.fila {
   display: grid;
+  grid-template-columns: 9rem 1fr;
   gap: 1.4rem;
-  dt { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); font-weight: 600; margin-bottom: 0.55rem; }
-  dd { margin: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.fila dt {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding-top: 0.12rem;
+}
+.fila dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 680px) {
+  .lamina { padding: 3rem 0 3.5rem; }
+  .indice a { grid-template-columns: 2.2rem 1fr; gap: 0.9rem; }
+  .meta { grid-column: 2; text-align: left; margin-top: 0.5rem; white-space: normal; }
+  .fila { grid-template-columns: 1fr; gap: 0.35rem; }
+  .via { flex-direction: column; gap: 0.35rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lugar, .firma span, .rol, .bajar, .bajar .flecha { animation: none; }
+}
+
+@media (max-width: 520px) {
+  .portada { padding: 4rem 0 6.5rem; }
+  .firma { letter-spacing: -0.035em; }
+  .estado { display: block; margin: 0.35rem 0 0; width: fit-content; }
 }

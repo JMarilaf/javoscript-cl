@@ -1,39 +1,90 @@
 .caso {
-  padding: 2.5rem 1.25rem 1rem;
-  h1 { margin-bottom: 0.6rem; font-size: clamp(1.75rem, 4.5vw, 2.35rem); }
-  h2 { margin: 2.5rem 0 0.9rem; }
+  padding: 3rem 1.5rem 1rem;
+
+  h1 { margin-bottom: 0.7rem; font-size: clamp(1.7rem, 4.2vw, 2.2rem); max-width: 22ch; }
+  h2 { margin: 2.75rem 0 0.9rem; }
+
+  /* La medida de lectura se limita aparte del ancho de la pagina: el codigo y
+     los filetes usan el ancho completo, la prosa no. */
+  p, ul { max-width: 68ch; }
 }
-.volver { display: inline-block; font-size: 0.88rem; color: var(--text-dim); margin-bottom: 2rem; }
-.volver:hover { color: var(--text); }
-.gancho { font-size: 1.08rem; color: var(--text-dim); max-width: 58ch; }
+
+.volver {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  margin-bottom: 2.25rem;
+  &:hover { color: var(--accent); }
+}
+
+.gancho {
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--text-dim);
+  max-width: 56ch;
+}
 
 .meta {
   display: grid;
-  gap: 1rem;
-  margin: 2rem 0 0;
-  dt { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); font-weight: 600; margin-bottom: 0.35rem; }
-  dd { margin: 0; font-size: 0.93rem; }
+  gap: 0.9rem;
+  margin: 2.25rem 0 0;
+
+  > div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1.2rem;
+    align-items: baseline;
+  }
+  dt {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  dd { margin: 0; font-size: 0.92rem; max-width: 60ch; }
 }
-.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.4rem;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.45rem;
+  white-space: nowrap;
+}
+
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0 0; }
 
 .puntos {
-  padding-left: 1.15rem;
+  padding-left: 1.05rem;
   margin: 0 0 1.4em;
   li { margin-bottom: 0.5rem; }
 }
 
 .cierre {
-  margin: 3rem 0 0;
-  padding: 1.5rem 1.6rem;
-  border-left: 3px solid var(--accent);
+  margin: 3.25rem 0 0;
+  padding: 1.35rem 1.5rem;
+  border-left: 2px solid var(--accent);
   background: var(--bg-alt);
-  border-radius: 0 10px 10px 0;
-  p:last-child { margin: 0.6rem 0 0; }
+  max-width: 68ch;
+
+  p:last-child { margin: 0.55rem 0 0; }
 }
 
 .nota {
   margin-top: 2.5rem;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--text-dim);
-  font-style: italic;
+}
+
+@media (max-width: 680px) {
+  .caso { padding-top: 2rem; }
+  .meta > div { grid-template-columns: 1fr; gap: 0.3rem; }
 }

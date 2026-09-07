@@ -1,41 +1,72 @@
-.top {
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(8px);
-  z-index: 10;
-}
+.top { border-bottom: 1px solid var(--border); }
+
 .bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  height: 56px;
+  height: 46px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
 }
+
 .brand {
-  font-weight: 650;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  &:hover { text-decoration: none; }
-  span { color: var(--text-dim); font-weight: 400; }
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  span { color: var(--text-dim); }
+  &:hover span { color: var(--accent); }
 }
-nav {
-  display: flex;
-  gap: 1.25rem;
-  font-size: 0.9rem;
-  a { color: var(--text-dim); }
-  a:hover { color: var(--text); }
+
+.acciones { display: flex; align-items: center; gap: 1.1rem; }
+
+.idioma {
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  border: 1px solid var(--border);
+  padding: 0.12rem 0.4rem;
+  &:hover { color: var(--accent); border-color: var(--accent); }
 }
+
+.tema {
+  font: inherit;
+  line-height: 1;
+  color: var(--text-dim);
+  background: none;
+  border: 1px solid var(--border);
+  padding: 0.12rem 0.42rem;
+  cursor: pointer;
+  &:hover { color: var(--accent); border-color: var(--accent); }
+}
+
+.mail {
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  &:hover { color: var(--accent); border-bottom-color: var(--accent); }
+}
+
 .foot {
   border-top: 1px solid var(--border);
-  margin-top: 5rem;
-  padding: 2.5rem 0 3.5rem;
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  p { margin: 0 0 0.5rem; }
-  .fine { font-size: 0.8rem; opacity: 0.75; }
+  padding: 1.1rem 0 2.5rem;
+
+  .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.5rem;
+    justify-content: space-between;
+  }
+  a {
+    color: var(--text-dim);
+    margin-left: 1rem;
+    &:first-child { margin-left: 0; }
+    &:hover { color: var(--accent); }
+  }
 }
-@media (max-width: 480px) {
-  nav { gap: 0.9rem; font-size: 0.82rem; }
+
+/* La barra lleva marca + idioma + tema + correo. En pantallas angostas el
+   correo se cae: los otros tres siguen dando acceso a todo. */
+@media (max-width: 520px) {
+  .bar { height: 42px; font-size: 0.72rem; }
+  .acciones { gap: 0.6rem; }
+  .mail { display: none; }
+  .foot .wrap { flex-direction: column; gap: 0.4rem; }
 }

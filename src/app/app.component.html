@@ -1,10 +1,24 @@
+<app-campo />
+
 <header class="top">
   <div class="wrap bar">
-    <a routerLink="/" class="brand">javoscript<span>.cl</span></a>
-    <nav>
-      <a routerLink="/" fragment="casos">Casos</a>
-      <a routerLink="/" fragment="proyectos">Proyectos</a>
-      <a [href]="'mailto:' + perfil.email">Contacto</a>
+    <a [routerLink]="i18n.base() || '/'" class="brand">javoscript<span>.cl</span></a>
+
+    <nav class="acciones">
+      <!-- Enlace real, no un boton: funciona sin JS y el crawler lo sigue
+           hasta la otra version del sitio. -->
+      <a class="idioma" [routerLink]="i18n.urlOtroIdioma()" [attr.hreflang]="i18n.otro()">
+        {{ i18n.otro() === 'en' ? 'EN' : 'ES' }}
+      </a>
+      <button
+        type="button"
+        class="tema"
+        (click)="temas.siguiente()"
+        [attr.aria-label]="etiquetaTema()"
+        [attr.title]="etiquetaTema()"
+      >{{ glifo() }}</button>
+
+      <a class="mail" [href]="'mailto:' + perfil().email">{{ ui().escribeme }}</a>
     </nav>
   </div>
 </header>
@@ -15,12 +29,11 @@
 
 <footer class="foot">
   <div class="wrap">
-    <p>
-      {{ perfil.nombre }} — {{ perfil.ubicacion }}<br />
-      <a [href]="'mailto:' + perfil.email">{{ perfil.email }}</a> ·
-      <a [href]="perfil.linkedin" rel="noopener">LinkedIn</a> ·
-      <a [href]="perfil.github" rel="noopener">GitHub</a>
-    </p>
-    <p class="fine">© {{ anio }} · Angular {{ '19' }} con renderizado en servidor</p>
+    <span class="label">{{ perfil().nombre }} · {{ perfil().ubicacion }}</span>
+    <span class="label">
+      <a [href]="'mailto:' + perfil().email">{{ ui().correo }}</a>
+      <a [href]="perfil().linkedin" rel="noopener">LinkedIn</a>
+      <a [href]="perfil().github" rel="noopener">GitHub</a>
+    </span>
   </div>
 </footer>
